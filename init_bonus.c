@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymahni <ymahni@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 22:35:02 by ymahni            #+#    #+#             */
+/*   Updated: 2024/01/10 22:35:03 by ymahni           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 static int	init_philos(t_data *data)
@@ -10,7 +22,6 @@ static int	init_philos(t_data *data)
 	while (++i < data->philos_num)
 	{
 		data->philos[i].position = i + 1;
-		data->philos[i].is_eating = 0;
 		data->philos[i].meals_count = 0;
 		sem_name = ft_strjoin("sem_eat", i_to_a(i));
 		data->philos[i].eat_s = safe_sem_open(sem_name, 0, 1);

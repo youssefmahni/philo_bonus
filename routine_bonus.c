@@ -8,7 +8,7 @@ static void	*is_alive(void *arg)
 	while (1)
 	{
 		sem_wait(philo->philo_s);
-		if (!philo->is_eating && get_time() > philo->limit)
+		if (get_time() > philo->last_eat + philo->state->time_to_die)
 		{
 			print_status(philo, DEAD);
 			sem_post(philo->philo_s);
@@ -41,13 +41,10 @@ static void	put_forks(t_philo *philo)
 static void	eat(t_philo *philo)
 {
 	sem_wait(philo->philo_s);
-	philo->is_eating = 1;
 	philo->last_eat = get_time();
 	print_status(philo, EATING);
-	philo->limit = philo->last_eat + philo->state->time_to_die;
 	safe_usleep(philo->state->time_to_eat * 1000);
 	philo->meals_count++;
-	philo->is_eating = 0;
 	sem_post(philo->philo_s);
 	sem_post(philo->eat_s);
 }
@@ -57,10 +54,9 @@ void	routine(t_philo *philo)
 	pthread_t th;
 
 	philo->last_eat = get_time();
-	philo->limit = philo->last_eat + philo->state->time_to_die;
 	safe_thread_create(&th, is_alive, (void *)philo);
 	safe_thread_detach(th);
-	while (philo->meals_count < (unsigned int)philo->state->must_eat)
+	while (1)
 	{
 		get_forks(philo);
 		eat(philo);

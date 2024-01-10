@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymahni <ymahni@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 22:29:48 by ymahni            #+#    #+#             */
+/*   Updated: 2024/01/10 22:29:49 by ymahni           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 void	clean(t_data *data)
@@ -10,14 +22,9 @@ void	clean(t_data *data)
 		kill(data->philos[i].pid, SIGKILL);
 		sem_close(data->philos[i].eat_s);
 		sem_close(data->philos[i].philo_s);
-		// safe_sem_unlink(ft_strjoin("sem_eat", i_to_a(i)));
-		// safe_sem_unlink(ft_strjoin("sem_philo", i_to_a(i)));
 	}
 	sem_close(data->forks);
 	sem_close(data->print_s);
 	sem_close(data->dead_s);
-	// sem_unlink("sem_fork");
-	// sem_unlink("sem_print");
-	// sem_unlink("sem_dead");
 	free(data->philos);
 }

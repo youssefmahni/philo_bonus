@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ymahni <ymahni@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 22:38:21 by ymahni            #+#    #+#             */
+/*   Updated: 2024/01/10 22:38:49 by ymahni           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 void	error_exit(char *err)
@@ -6,7 +18,7 @@ void	error_exit(char *err)
 	exit(EXIT_FAILURE);
 }
 
-long	get_time(void)
+size_t	get_time(void)
 {
 	struct timeval	tv;
 	long			time;
@@ -64,3 +76,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
+void	print_status(t_philo *philo, char *status)
+{
+	size_t	time;
+
+	sem_wait(philo->state->print_s);
+	time = get_time() - philo->state->start_time;
+	printf("%ld %d %s\n", time, philo->position, status);
+	sem_post(philo->state->print_s);
+}

@@ -10,9 +10,9 @@ void	*safe_malloc(size_t size)
 	return (ptr);
 }
 
-void safe_usleep(long to_sleep)
+void safe_usleep(size_t to_sleep)
 {
-	long start_time;
+	size_t start_time;
 
 	start_time = get_time();
 
